@@ -107,7 +107,7 @@ function NeuralNetwork:train( trainingSet, attempts)
 	end
 end
 
-function NeuralNetwork:test( trainingSet, extraInputs)
+function NeuralNetwork:test( trainingSet)
 	local testResults = "Training Test For Nerual Network:\n"
 	local totalErrorMargin = 0
 	for i = 1,table.getn(trainingSet) do
@@ -130,20 +130,6 @@ function NeuralNetwork:test( trainingSet, extraInputs)
 		totalErrorMargin = totalErrorMargin + errorMargin
 		testResults = testResults.."\t\tAverage Output Error Margin: "..errorMargin.."\n\t\tAverage Percentage of Accuracy: "..string.format("%.3f",100-errorMargin*100).."%\n"
 
-	end
-	if extraInputs then
-		for i = 1,table.getn(extraInputs) do
-			testResults = testResults.."\tUnprepared Set #"..i.."\n"
-			local results = self:forewardPropagate(extraInputs[i])
-			testResults = testResults.."\t\tInput:\n"
-			for j = 1,table.getn(extraInputs[i]) do
-				testResults = testResults.."			"..extraInputs[i][j].."\n"
-			end
-			testResults = testResults.."\t\tOutput:\n"
-			for j = 1,table.getn(results) do
-				testResults = testResults.."			"..results[j].."\n"
-			end
-		end
 	end
 	totalErrorMargin = totalErrorMargin / table.getn(trainingSet)
 	testResults = testResults.."	Overall Average Error Margin of Trained Sets: "..totalErrorMargin.."\n	Overall Average Percentage of Accuracy: "..string.format("%.3f",100-totalErrorMargin*100).."%\n"
